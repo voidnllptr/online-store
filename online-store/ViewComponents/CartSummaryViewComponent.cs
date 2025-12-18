@@ -54,6 +54,4 @@ namespace online_store.ViewComponents
             });
         }
     }
-
-    // CartSummaryViewModel has been moved to ViewModels/CartSummaryViewModel.cs
 }
