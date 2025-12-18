@@ -1,0 +1,95 @@
+@page "{id:int}"
+@model online_store.Pages.Cart.AddModel
+@{
+    ViewData["Title"] = "Добавить в корзину";
+}
+
+<div class="container mt-4">
+    @if (Model.Product != null)
+    {
+        <div class="row">
+            <div class="col-md-6">
+                @if (!string.IsNullOrEmpty(Model.Product.ImageUrl))
+                {
+                    <img src="@Model.Product.ImageUrl" class="img-fluid rounded" alt="@Model.Product.Name">
+                }
+                else
+                {
+                    <div class="bg-light d-flex align-items-center justify-content-center" style="height: 300px;">
+                        <i class="bi bi-image" style="font-size: 4rem; color: #6c757d;"></i>
+                    </div>
+                }
+            </div>
+            <div class="col-md-6">
+                <h2>@Model.Product.Name</h2>
+                <p class="h4 text-primary mb-4">@Model.Product.Price.ToString("C")</p>
+                
+                @if (Model.Product.Stock > 0)
+                {
+                    <form method="post" class="mb-4">
+                        <div class="mb-3">
+                            <label for="quantity" class="form-label">Количество</label>
+                            <div class="input-group" style="width: 150px;">
+                                <button type="button" class="btn btn-outline-secondary" onclick="decrement()">-</button>
+                                <input type="number" class="form-control text-center" id="quantity" name="quantity" value="1" min="1" max="@Model.Product.Stock">
+                                <button type="button" class="btn btn-outline-secondary" onclick="increment()">+</button>
+                            </div>
+                            <div class="form-text">Доступно: @Model.Product.Stock шт.</div>
+                        </div>
+                        <input type="hidden" name="returnUrl" value="@Model.ReturnUrl" />
+                        <button type="submit" class="btn btn-primary btn-lg w-100">
+                            <i class="bi bi-cart-plus"></i> Добавить в корзину
+                        </button>
+                    </form>
+                }
+                else
+                {
+                    <div class="alert alert-warning">
+                        <i class="bi bi-exclamation-triangle"></i> Товара нет в наличии
+                    </div>
+                }
+                
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">Описание</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>@(string.IsNullOrEmpty(Model.Product.Description) ? "Описание отсутствует" : Model.Product.Description)</p>
+                        <p class="mb-0">
+                            <strong>Категория:</strong> @(Model.Product.Category?.Name ?? "Без категории")
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger">
+            <i class="bi bi-exclamation-circle"></i> Товар не найден
+        </div>
+        <a href="/Catalog" class="btn btn-outline-primary mt-3">
+            <i class="bi bi-arrow-left"></i> Вернуться в каталог
+        </a>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        function increment() {
+            var input = document.getElementById('quantity');
+            var value = parseInt(input.value, 10);
+            if (value < @(Model.Product?.Stock ?? 1)) {
+                input.value = value + 1;
+            }
+        }
+
+        function decrement() {
+            var input = document.getElementById('quantity');
+            var value = parseInt(input.value, 10);
+            if (value > 1) {
+                input.value = value - 1;
+            }
+        }
+    </script>
+}

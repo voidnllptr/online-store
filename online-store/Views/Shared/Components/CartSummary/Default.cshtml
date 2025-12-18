@@ -1,0 +1,17 @@
+@model online_store.ViewModels.CartSummaryViewModel
+
+<a href="/Cart" class="nav-link">
+    <i class="bi bi-cart3"></i>
+    @if (Model.ItemCount > 0)
+    {
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            @Model.ItemCount
+            <span class="visually-hidden">товаров в корзине</span>
+        </span>
+    }
+    <span class="d-none d-md-inline">Корзина</span>
+    @if (Model.ItemCount > 0)
+    {
+        <span class="d-none d-md-inline">(@Model.Total.ToString("C"))</span>
+    }
+</a>

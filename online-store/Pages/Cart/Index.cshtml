@@ -1,0 +1,101 @@
+@page
+@model online_store.Pages.Cart.IndexModel
+@{
+    ViewData["Title"] = "Корзина";
+}
+
+<div class="container py-4">
+    <h2 class="mb-4">Ваша корзина</h2>
+    
+    @if (Model.CartItems?.Any() == true)
+    {
+        <div class="card shadow-sm">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Товар</th>
+                                <th class="text-end">Цена</th>
+                                <th class="text-center">Количество</th>
+                                <th class="text-end">Итого</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.CartItems)
+                            {
+                                <tr class="align-middle">
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            @if (!string.IsNullOrEmpty(item.Product.ImageUrl))
+                                            {
+                                                <img src="@item.Product.ImageUrl" alt="@item.Product.Name" class="cart-item-image me-3">
+                                            }
+                                            <div>
+                                                <h6 class="mb-1">@item.Product.Name</h6>
+                                                <small class="text-muted">@item.Product.Category?.Name</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="text-end">@item.Product.Price.ToString("C")</td>
+                                    <td>
+                                        <div class="d-flex justify-content-center">
+                                            <form method="post" asp-page-handler="Update" class="d-flex">
+                                                <input type="hidden" name="id" value="@item.Id" />
+                                                <input type="hidden" name="quantity" value="@(item.Quantity - 1)" />
+                                                <button type="submit" class="btn btn-quantity" @(item.Quantity <= 1 ? "disabled" : string.Empty)>-</button>
+                                            </form>
+                                            <input type="text" class="form-control cart-quantity-input mx-1" value="@item.Quantity" readonly>
+                                            <form method="post" asp-page-handler="Update" class="d-flex">
+                                                <input type="hidden" name="id" value="@item.Id" />
+                                                <input type="hidden" name="quantity" value="@(item.Quantity + 1)" />
+                                                <button type="submit" class="btn btn-quantity" @(item.Quantity >= item.Product.Stock ? "disabled" : string.Empty)>+</button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                    <td class="text-end fw-bold">@((item.Quantity * item.Product.Price).ToString("C"))</td>
+                                    <td class="text-end">
+                                        <form method="post" asp-page-handler="Delete">
+                                            <input type="hidden" name="id" value="@item.Id" />
+                                            <button type="submit" class="btn btn-link text-danger p-0" title="Удалить">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="p-3 bg-light">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Итого: <span class="cart-total">@Model.Total.ToString("C")</span></h5>
+                        <div>
+                            <a href="/Catalog" class="btn btn-outline-secondary me-2">
+                                <i class="bi bi-arrow-left me-1"></i> Продолжить покупки
+                            </a>
+                            <a href="/Account/Login?returnUrl=/Cart/Checkout" class="btn btn-primary">
+                                Оформить заказ <i class="bi bi-arrow-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="text-center py-5">
+            <div class="empty-cart-icon mb-3">
+                <i class="bi bi-cart-x"></i>
+            </div>
+            <h4 class="mb-3">Ваша корзина пуста</h4>
+            <p class="text-muted mb-4">Добавьте товары в корзину, чтобы продолжить</p>
+            <a href="/Catalog" class="btn btn-primary px-4">
+                <i class="bi bi-arrow-left me-2"></i> Вернуться в каталог
+            </a>
+        </div>
+    }
+</div>

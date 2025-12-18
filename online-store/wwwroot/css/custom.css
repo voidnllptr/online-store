@@ -1,0 +1,113 @@
+:root {
+    --bs-primary: #F2CEDE;
+    --bs-primary-rgb: 242, 206, 222;
+    --bs-link-color: #F2CEDE;
+    --bs-link-hover-color: #e8b8d0;
+}
+
+.navbar.bg-primary {
+    background-color: var(--bs-primary) !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btn-primary {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+    color: #000;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+    background-color: #e8b8d0 !important;
+    border-color: #e8b8d0 !important;
+    color: #000;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: rgba(0, 0, 0, 0.9);
+}
+
+.navbar-dark .navbar-nav .nav-link:hover {
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem rgba(242, 206, 222, 0.5) !important;
+}
+
+.btn-outline-primary {
+    color: #000;
+    border-color: #F2CEDE;
+}
+
+.btn-outline-primary:hover {
+    background-color: #F2CEDE;
+    border-color: #F2CEDE;
+    color: #000;
+}
+
+.footer a {
+    color: #F2CEDE;
+    text-decoration: underline;
+    text-decoration-color: #F2CEDE;
+}
+
+.footer a:hover {
+    color: #e8b8d0;
+    text-decoration-color: #e8b8d0;
+}
+
+.navbar-dark .navbar-nav .nav-link.active {
+    color: #000;
+    font-weight: 500;
+}
+
+.badge.bg-danger {
+    background-color: #dc3545 !important;
+}
+
+.cart-item-image {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.cart-quantity-input {
+    width: 50px;
+    text-align: center;
+    border: 1px solid #F2CEDE;
+}
+
+.btn-quantity {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    background-color: #F2CEDE;
+    border: 1px solid #F2CEDE;
+    color: #000;
+}
+
+.btn-quantity:hover {
+    background-color: #e8b8d0;
+    border-color: #e8b8d0;
+    color: #000;
+}
+
+.btn-quantity:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.cart-total {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.empty-cart-icon {
+    font-size: 4rem;
+    color: #F2CEDE;
+}
