@@ -1,0 +1,35 @@
+﻿@page
+@model online_store.Pages.Admin.IndexModel
+
+<h1>Панель администратора — товары</h1>
+
+<p>
+    <a asp-page="Create" class="btn btn-primary">Добавить товар</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Название</th>
+            <th>Категория</th>
+            <th>Цена</th>
+            <th>Кол-во на складе</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Products)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Category?.Name</td>
+                <td>@item.Price</td>
+                <td>@item.Stock</td>
+                <td>
+                    <a asp-page="Edit" asp-route-id="@item.Id">Редактировать</a> |
+                    <a asp-page="Delete" asp-route-id="@item.Id">Удалить</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
